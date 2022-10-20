@@ -1,6 +1,5 @@
 package at.ac.fhcampuswien;
 
-import java.text.DecimalFormat;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -43,10 +42,77 @@ public class App {
         return random;
     }
 
-    public static int randomNumberBetweenOneAndHundred(int number){
+    public static int randomNumberBetweenOneAndHundred(){
         Random random = new Random();
-        number = random.nextInt(100);
+        int number = random.nextInt(100)+1;
         return number;
+    }
+
+    public static void guessingGame(int numbertoGuess){
+        Scanner scan = new Scanner(System.in);
+        int number;
+
+        for(int i = 1; i <= 10; i++) {
+            System.out.printf("Guess number " + i + ": ");
+            number = scan.nextInt();
+            if(i==10) {
+                System.out.println("You lost! Have you ever heard of divide & conquer?");
+                break;
+            }
+            else if(number < numbertoGuess) {
+                System.out.println("The number AI picked is higher than your guess.");
+            }
+            else if(number > numbertoGuess) {
+                System.out.println("The number AI picked is lower than your guess.");
+            }
+            else if(number==numbertoGuess){
+                System.out.println("You won wisenheimer!");
+                break;
+            }
+        }
+
+    }
+
+    public static boolean swapArrays(int[] firstarray, int[] secondarray){
+        int[] savefirst = new int[firstarray.length];
+
+        if(firstarray.length == secondarray.length){
+            for(int i = 0; i < firstarray.length; i++){
+                savefirst[i] = firstarray[i];
+                firstarray[i] = secondarray[i];
+                secondarray[i] = savefirst[i];
+            }
+            return true;
+        }
+        else
+            return false;
+
+    }
+
+    public static String CamelCase(String input){
+        char[] cc = input.toCharArray();
+        String output;
+        for(int i = 0; i < cc.length; i++){
+            if(i==0){
+                if((int)cc[i] >= 97 && (int)cc[i] <= 122) {
+                    cc[i] = (char) ((int) cc[i] - 32);
+                }
+            }
+            else if(((int)cc[i]<65 && (int)cc[i]>90) || ((int)cc[i]<97 && (int)cc[i]>122)){
+                cc[i]=(char)32;
+            }
+            else{
+                if((int)cc[i] >= 65 && (int)cc[i] <= 90 && (int)cc[i-1] != 32) {
+                    cc[i] = (char) ((int) cc[i] + 32);
+                }
+                else if((int)cc[i] >= 97 && (int)cc[i] <= 122 && (int)cc[i-1] == 32) {
+                    cc[i] = (char) ((int) cc[i] - 32);
+                }
+            }
+        }
+        output = String.valueOf(cc);
+        System.out.println(output.replace(" ", ""));
+        return output;
     }
 
     public static void main(String[] args) {
@@ -54,6 +120,6 @@ public class App {
         // make method calls
         // print their results
         // etc.
-        lcg(102545);
+        CamelCase("but a noisY noise annoYs an oYster more.");
     }
 }
