@@ -7,7 +7,7 @@ public class App {
 
     // Implement all methods as public static
     public static void oneMonthCalendar (int days, int begin){
-        int count = 0;
+        int count;
         int current = 0;
         if(begin!=1){
             for (int j = 1; j < begin; j++)
@@ -89,17 +89,16 @@ public class App {
 
     }
 
-    public static String CamelCase(String input){
+    public static String camelCase(String input){
         char[] cc = input.toCharArray();
         String output;
+        String newoutput;
+        String result;
         for(int i = 0; i < cc.length; i++){
             if(i==0){
                 if((int)cc[i] >= 97 && (int)cc[i] <= 122) {
                     cc[i] = (char) ((int) cc[i] - 32);
                 }
-            }
-            else if(((int)cc[i]<65 && (int)cc[i]>90) || ((int)cc[i]<97 && (int)cc[i]>122)){
-                cc[i]=(char)32;
             }
             else{
                 if((int)cc[i] >= 65 && (int)cc[i] <= 90 && (int)cc[i-1] != 32) {
@@ -111,8 +110,39 @@ public class App {
             }
         }
         output = String.valueOf(cc);
-        System.out.println(output.replace(" ", ""));
-        return output;
+        newoutput = output.replace(" ", "");
+        char[] interim = newoutput.toCharArray();
+
+        for(int j = 0; j < interim.length; j++){
+            if(((int)interim[j]<97 && (int)interim[j]>90) || ((int)interim[j]<65 || (int)interim[j]>122)){
+                interim[j]=(char)33;
+            }
+        }
+
+        newoutput = String.valueOf(interim);
+        result =newoutput.replace("!","");
+        System.out.println(result);
+        return result;
+    }
+
+    public static int checkDigit(int[] input){
+        int weighting = 2;
+        int sum = 0;
+        int modeleven;
+        int check;
+
+        for(int i = 0; i < input.length; i++){
+            sum += input[i]*(weighting+i);
+        }
+
+        modeleven = sum%11;
+        check = 11 - modeleven;
+        if(check == 10)
+            check=0;
+        else if(check==11)
+            check=5;
+
+        return check;
     }
 
     public static void main(String[] args) {
@@ -120,6 +150,7 @@ public class App {
         // make method calls
         // print their results
         // etc.
-        CamelCase("but a noisY noise annoYs an oYster more.");
+        int[] ka = {3, 9, 1, 5, 8};
+        checkDigit(ka);
     }
 }
